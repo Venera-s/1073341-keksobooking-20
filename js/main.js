@@ -6,6 +6,9 @@ var ROOMS_AMOUNT_MAX = 100;
 var GUESTS_AMOUNT_MAX = 10;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
+var MAP_PIN_WIDTH = 65;
+var MAP_PIN_HEIGHT = 82;
+var MAP_PIN_ROUND_HALF_HEIGHT = 31;
 var MAX_PRICE = 1000000;
 var CHEKINS = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -16,6 +19,8 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
+var KEY_CODE_ENTER = 13;
+var MOUSE_DOWN_LEFT = 0;
 var map = document.querySelector('.map');
 var mapPins = document.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -96,7 +101,55 @@ var getMapPins = function (announcements) {
   return fragment;
 };
 
-var allAnnouncements = getAnnouncements(ADVERTS_AMOUNT);
-mapPins.appendChild(getMapPins(allAnnouncements));
+var formElements = document.querySelectorAll('form input, form select, form textarea, .ad-form__submit');
 
-map.classList.remove('map--faded');
+var disabledForm = function (elements) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].toggleAttribute('disabled');
+  }
+};
+
+disabledForm(formElements);
+
+var mapPin = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var fieldAddress = adForm.querySelector('#address');
+
+// Заполнение поля адреса
+
+var pin = function (mapPinHeight) {
+  var coordinateX = Math.round(mapPin.offsetLeft + MAP_PIN_WIDTH / 2);
+  var coordinateY = mapPin.offsetTop + Math.round(mapPinHeight);
+  fieldAddress.value = coordinateX + ', ' + coordinateY;
+};
+
+pin(MAP_PIN_ROUND_HALF_HEIGHT);
+
+// Активация страницы
+
+var activePage = function () {
+  pin(MAP_PIN_HEIGHT);
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  disabledForm(formElements);
+  var allAnnouncements = getAnnouncements(ADVERTS_AMOUNT);
+  mapPins.appendChild(getMapPins(allAnnouncements));
+  mapPin.removeEventListener('mousedown', onMapPinClick);
+  mapPin.removeEventListener('keydown', onMapPinDown);
+};
+
+var onMapPinClick = function (evt) {
+  if (evt.button === MOUSE_DOWN_LEFT) {
+    activePage();
+  }
+};
+
+var onMapPinDown = function (evt) {
+  if (evt.keyCode === KEY_CODE_ENTER) {
+    activePage();
+  }
+};
+
+mapPin.addEventListener('mousedown', onMapPinClick);
+mapPin.addEventListener('keydown', onMapPinDown);
+

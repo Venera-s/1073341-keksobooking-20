@@ -9,7 +9,9 @@ var LOCATION_Y_MAX = 630;
 var MAP_PIN_WIDTH = 65;
 var MAP_PIN_HEIGHT = 82;
 var MAP_PIN_ROUND_HALF_HEIGHT = 31;
-var MAX_PRICE = 1000000;
+var TITLE_LENGTH_MIN = 30;
+var TITLE_LENGTH_MAX = 100;
+var PRICE_MAX = 1000000;
 var CHEKINS = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PIN_WIDTH = 50;
@@ -58,7 +60,7 @@ var getAnnouncements = function (amountAnnouncements) {
       offer: {
         title: 'Ваше объявление',
         address: positionX + ', ' + positionY,
-        price: getRandomInt(0, MAX_PRICE),
+        price: getRandomInt(0, PRICE_MAX),
         type: getRandomElement(PLACE_TYPES),
         rooms: getRandomInt(0, ROOMS_AMOUNT_MAX),
         guests: getRandomInt(0, GUESTS_AMOUNT_MAX),
@@ -152,4 +154,39 @@ var onMapPinDown = function (evt) {
 
 mapPin.addEventListener('mousedown', onMapPinClick);
 mapPin.addEventListener('keydown', onMapPinDown);
+
+
+var titleField = adForm.querySelector('#title');
+
+titleField.addEventListener('input', function () {
+  var titleFieldLength = titleField.value.length;
+
+  if (titleField.validity.valueMissing) {
+    titleField.setCustomValidity('Заполните пожалуйста поле');
+  } else if (titleFieldLength < TITLE_LENGTH_MIN) {
+    titleField.setCustomValidity('Еще нужно ввести ' + (TITLE_LENGTH_MIN - titleFieldLength) + ' символов');
+
+  } else if (titleFieldLength > TITLE_LENGTH_MAX) {
+    titleField.setCustomValidity('Удалите лишние ' + (TITLE_LENGTH_MAX - titleFieldLength) + ' символов');
+
+  } else {
+    titleField.setCustomValidity('');
+  }
+});
+
+var housePrice = adForm.querySelector('#price');
+var typeHouse = adForm.querySelector('#type');
+
+var pricesForTypes = {
+  'bungalo': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000
+};
+
+typeHouse.addEventListener('input', function () {
+  housePrice.setAttribute('placeholder', pricesForTypes[typeHouse.value]);
+  housePrice.setAttribute('min', pricesForTypes[typeHouse.value]);
+});
+
 

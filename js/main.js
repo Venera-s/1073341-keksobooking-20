@@ -155,6 +155,7 @@ var onMapPinDown = function (evt) {
 mapPin.addEventListener('mousedown', onMapPinClick);
 mapPin.addEventListener('keydown', onMapPinDown);
 
+// Валидация формы
 
 var titleField = adForm.querySelector('#title');
 
@@ -189,4 +190,25 @@ typeHouse.addEventListener('input', function () {
   housePrice.setAttribute('min', pricesForTypes[typeHouse.value]);
 });
 
+var roomNumber = adForm.querySelector('#room_number');
+var capacity = adForm.querySelector('#capacity');
+
+var roomGuests = function () {
+  var roomValue = roomNumber.selectedIndex;
+  var capacityValue = capacity.selectedIndex;
+  if (roomNumber.value === '100' && capacity.value !== '0') {
+    roomNumber.setCustomValidity('Для ' + roomNumber.options[roomValue].label + ' предназначено ' + capacity.options[roomValue].label);
+  } else if (roomNumber.value < capacity.value) {
+    roomNumber.setCustomValidity('Количество комнат не должно превышать количество гостей');
+  } else if (capacity.value === '0' && roomNumber.value !== '100') {
+    roomNumber.setCustomValidity('Для ' + capacity.options[capacityValue].label + ' предназначено ' + roomNumber.options[capacityValue].label);
+  } else {
+    roomNumber.setCustomValidity('');
+  }
+};
+
+roomGuests();
+
+roomNumber.addEventListener('input', roomGuests);
+capacity.addEventListener('input', roomGuests);
 

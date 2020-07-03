@@ -5,6 +5,7 @@
   var MAP_PIN_WIDTH = 65;
   var TITLE_LENGTH_MIN = 30;
   var TITLE_LENGTH_MAX = 100;
+  var FORM_DISABLED = 'ad-form--disabled';
 
   var PRICES_FOR_TYPES = {
     'bungalo': 0,
@@ -13,6 +14,7 @@
     'palace': 10000
   };
 
+  var formElements = document.querySelectorAll('form input, form select, form textarea, .ad-form__submit');
   var adForm = document.querySelector('.ad-form');
   var fieldAddress = adForm.querySelector('#address');
   var titleField = adForm.querySelector('#title');
@@ -23,9 +25,17 @@
   var timeIn = adForm.querySelector('#timein');
   var timeOut = adForm.querySelector('#timeout');
 
+  var setEnabled = function (variable, className) {
+    variable.classList.toggle(className);
+  };
+
+  var setEnabledAdForm = function () {
+    setEnabled(adForm, FORM_DISABLED);
+  };
+
   var setAddress = function (mapPinHeight) {
-    var coordinateX = Math.round(window.activePage.mapPin.offsetLeft + MAP_PIN_WIDTH / 2);
-    var coordinateY = window.activePage.mapPin.offsetTop + Math.round(mapPinHeight);
+    var coordinateX = Math.round(window.movementPin.movePin.offsetLeft + MAP_PIN_WIDTH / 2);
+    var coordinateY = window.movementPin.movePin.offsetTop + Math.round(mapPinHeight);
     fieldAddress.value = coordinateX + ', ' + coordinateY;
   };
 
@@ -92,8 +102,10 @@
   timeIn.addEventListener('change', onTimeChange);
   timeOut.addEventListener('change', onTimeChange);
 
-  window.form = {
-    adForm: adForm,
-    setAddress: setAddress
+  window.main = {
+    setEnabled: setEnabled,
+    setEnabledAdForm: setEnabledAdForm,
+    setAddress: setAddress,
+    elements: formElements//неправильный экспорт
   };
 })();

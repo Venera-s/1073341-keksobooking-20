@@ -1,51 +1,44 @@
 'use strict';
 
 (function () {
-  var formElements = document.querySelectorAll('form input, form select, form textarea, .ad-form__submit');
-  var MOUSE_DOWN_LEFT = 0;
-  var KEY_CODE_ENTER = 'Enter';
-  var ADVERTS_AMOUNT = 8;
-  var MAP_PIN_HEIGHT = 82;
+  var MAP_FADED = 'map--faded';
 
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
-  var mapPin = document.querySelector('.map__pin--main');
+  var mainPin = document.querySelector('.map__pin--main');
 
   var activatePage = function () {
-    window.form.setAddress(MAP_PIN_HEIGHT);
-    map.classList.remove('map--faded');
-    window.form.adForm.classList.remove('ad-form--disabled');
-    disableForm(formElements);
-    var allAnnouncements = window.data.getAnnouncements(ADVERTS_AMOUNT);
+    window.main.setAddress(window.map.pinHeight);
+    window.main.setEnabled(map, MAP_FADED);
+    window.main.setEnabledAdForm();
+    toggleStateForm(window.main.elements);
+    var allAnnouncements = window.data.getAnnouncements(window.data.advertsAmount);
     mapPins.appendChild(window.pin.create(allAnnouncements));
-    mapPin.removeEventListener('mousedown', onMapPinClick);
-    mapPin.removeEventListener('keydown', onMapPinDown);
+    mainPin.removeEventListener('mousedown', onMainPinClick);
+    mainPin.removeEventListener('keydown', onMainPinKeyDown);
   };
 
-  var onMapPinClick = function (evt) {
-    if (evt.button === MOUSE_DOWN_LEFT) {
+  var onMainPinClick = function (evt) {
+    if (evt.button === window.util.mouseDownLeft) {
       activatePage();
     }
   };
 
-  var onMapPinDown = function (evt) {
-    if (evt.key === KEY_CODE_ENTER) {
+  var onMainPinKeyDown = function (evt) {
+    if (evt.key === window.util.keyCodeEnter) {
       activatePage();
     }
   };
 
-  var disableForm = function (elements) {
+  var toggleStateForm = function (elements) {
     for (var i = 0; i < elements.length; i++) {
       elements[i].toggleAttribute('disabled');
     }
   };
 
-  disableForm(formElements);
+  toggleStateForm(window.main.elements);
 
-  mapPin.addEventListener('mousedown', onMapPinClick);
-  mapPin.addEventListener('keydown', onMapPinDown);
+  mainPin.addEventListener('mousedown', onMainPinClick);
+  mainPin.addEventListener('keydown', onMainPinKeyDown);
 
-  window.activePage = {
-    mapPin: mapPin
-  };
 })();

@@ -30,7 +30,9 @@
   };
 
   window.pin = {
-    create: getMapPins
+    create: getMapPins,
+    width: PIN_WIDTH,
+    height: PIN_HEIGHT
   };
 })();
 

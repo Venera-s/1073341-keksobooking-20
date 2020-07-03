@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ADVERTS_AMOUNT = 8;
   var GUESTS_AMOUNT_MAX = 10;
   var ROOMS_AMOUNT_MAX = 100;
   var LOCATION_Y_MIN = 130;
@@ -15,29 +16,12 @@
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
   ];
 
-  var getRandomInt = function (min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  var getRandomElement = function (elements) {
-    return elements[getRandomInt(0, elements.length - 1)];
-  };
-
-  var getRandomPart = function (elements) {
-    var benefits = elements.length;
-    var begin = getRandomInt(0, benefits - 2);
-    var end = getRandomInt(begin + 1, benefits);
-    return elements.slice(begin, end);
-  };
-
   var getAnnouncements = function (amountAnnouncements) {
     var locationX = document.querySelector('.map').clientWidth;
     var announcements = [];
     for (var i = 0; i < amountAnnouncements; i++) {
-      var positionX = getRandomInt(0, locationX);
-      var positionY = getRandomInt(LOCATION_Y_MIN, LOCATION_Y_MAX);
+      var positionX = window.util.getRandomInt(0, locationX);
+      var positionY = window.util.getRandomInt(LOCATION_Y_MIN, LOCATION_Y_MAX);
 
       announcements.push({
         author: {
@@ -46,15 +30,15 @@
         offer: {
           title: 'Ваше объявление',
           address: positionX + ', ' + positionY,
-          price: getRandomInt(0, PRICE_MAX),
-          type: getRandomElement(PLACE_TYPES),
-          rooms: getRandomInt(0, ROOMS_AMOUNT_MAX),
-          guests: getRandomInt(0, GUESTS_AMOUNT_MAX),
-          checkin: getRandomElement(CHEKINS),
-          checkout: getRandomElement(CHEKINS),
-          features: getRandomPart(FEATURES),
+          price: window.util.getRandomInt(0, PRICE_MAX),
+          type: window.util.getRandomElement(PLACE_TYPES),
+          rooms: window.util.getRandomInt(0, ROOMS_AMOUNT_MAX),
+          guests: window.util.getRandomInt(0, GUESTS_AMOUNT_MAX),
+          checkin: window.util.getRandomElement(CHEKINS),
+          checkout: window.util.getRandomElement(CHEKINS),
+          features: window.util.getRandomPart(FEATURES),
           description: 'Продам комфортабельную квартиру',
-          photos: getRandomPart(PHOTOS)
+          photos: window.util.getRandomPart(PHOTOS)
         },
         location: {
           x: positionX,
@@ -69,6 +53,9 @@
 
   window.data = {
     getAnnouncements: getAnnouncements,
-    ROOMS_AMOUNT_MAX: ROOMS_AMOUNT_MAX
+    advertsAmount: ADVERTS_AMOUNT,
+    roomsAmountMax: ROOMS_AMOUNT_MAX,
+    locationMinY: LOCATION_Y_MIN,
+    locationMaxY: LOCATION_Y_MAX
   };
 })();

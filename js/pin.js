@@ -35,4 +35,3 @@
     height: PIN_HEIGHT
   };
 })();
-

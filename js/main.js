@@ -106,6 +106,6 @@
     setEnabled: setEnabled,
     setEnabledAdForm: setEnabledAdForm,
     setAddress: setAddress,
-    elements: formElements//неправильный экспорт
+    elements: formElements
   };
 })();

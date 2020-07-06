@@ -5,6 +5,6 @@
 
 
   window.map = {
-    pinHeight: MAP_PIN_HEIGHT
+    MAP_PIN_HEIGHT: MAP_PIN_HEIGHT
   };
 })();

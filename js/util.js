@@ -23,8 +23,8 @@
   };
 
   window.util = {
-    mouseDownLeft: MOUSE_DOWN_LEFT,
-    keyCodeEnter: KEY_CODE_ENTER,
+    MOUSE_DOWN_LEFT: MOUSE_DOWN_LEFT,
+    KEY_CODE_ENTER: KEY_CODE_ENTER,
     getRandomInt: getRandomInt,
     getRandomElement: getRandomElement,
     getRandomPart: getRandomPart

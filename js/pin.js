@@ -2,8 +2,8 @@
 
 (function () {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
+  var MAIN_PIN_WIDTH = 65;
+  var MAIN_PIN_HEIGHT = 82;
 
 
   // 3 пункт: На основе данных, созданных в первом пункте, создать DOM-элементы, соответствующие меткам на карте, и заполнить их данными из массива.
@@ -13,8 +13,8 @@
     var pinImage = templateButton.querySelector('img');
     pinImage.src = offer.author.avatar;
     pinImage.alt = offer.offer.title;
-    templateButton.style.left = offer.location.x - PIN_WIDTH / 2 + 'px';
-    templateButton.style.top = offer.location.y - PIN_HEIGHT + 'px';
+    templateButton.style.left = offer.location.x - MAIN_PIN_WIDTH / 2 + 'px';
+    templateButton.style.top = offer.location.y - MAIN_PIN_HEIGHT + 'px';
     return templateButton;
   };
 
@@ -31,7 +31,7 @@
 
   window.pin = {
     create: getMapPins,
-    width: PIN_WIDTH,
-    height: PIN_HEIGHT
+    WIDTH: MAIN_PIN_WIDTH,
+    HEIGHT: MAIN_PIN_HEIGHT
   };
 })();

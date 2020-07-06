@@ -34,8 +34,8 @@
   };
 
   var setAddress = function (mapPinHeight) {
-    var coordinateX = Math.round(window.movementPin.movePin.offsetLeft + MAP_PIN_WIDTH / 2);
-    var coordinateY = window.movementPin.movePin.offsetTop + Math.round(mapPinHeight);
+    var coordinateX = Math.round(window.movementPin.move.offsetLeft + MAP_PIN_WIDTH / 2);
+    var coordinateY = window.movementPin.move.offsetTop + Math.round(mapPinHeight);
     fieldAddress.value = coordinateX + ', ' + coordinateY;
   };
 
@@ -106,6 +106,7 @@
     setEnabled: setEnabled,
     setEnabledAdForm: setEnabledAdForm,
     setAddress: setAddress,
-    elements: formElements
+    elements: formElements,
+    fieldAddress: fieldAddress
   };
 })();

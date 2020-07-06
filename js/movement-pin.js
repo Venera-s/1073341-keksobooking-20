@@ -2,19 +2,9 @@
 
 (function () {
 
-  var movePin = document.querySelector('.map__pin--main');
-  // var locationMinX = movePin.parentElement.offsetLeft;
-  // var locationMaxX = movePin.parentElement.offsetWidth;
-  // var PIN_HALF_WIDTH = window.pin.width / 2;
-  // var limitationMinPinX = locationMinX - PIN_HALF_WIDTH;
-  // var limitationMaxPinX = locationMaxX - PIN_HALF_WIDTH;
-  // var limitationMinPinY = window.data.locationMinY - window.pin.height;
-  // var limitationMaxPinY = window.data.locationMaxY - window.pin.height;
+  var MainPinMove = document.querySelector('.map__pin--main');
 
-  // console.log(limitationMinPinX, limitationMaxPinX, limitationMinPinY, limitationMaxPinY);
-
-
-  movePin.addEventListener('mousedown', function (evt) {
+  MainPinMove.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -29,30 +19,66 @@
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
       };
+
       startCoords = {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-      movePin.style.top = (movePin.offsetTop - shift.y) + 'px';
-      movePin.style.left = (movePin.offsetLeft - shift.x) + 'px';
 
-      // var movePinMinX = locationMinX - shift.x;
-      // var movePinMinY = window.data.locationMinY - shift.y;
+      var locationX = MainPinMove.offsetLeft - shift.x;
+      var locationY = MainPinMove.offsetTop - shift.y;
+      var mainPinHalfWidth = Math.round(window.pin.WIDTH / 2);
+      var mainPinHalfHeight = window.pin.HEIGHT;
+      var locationMinX = MainPinMove.parentElement.offsetLeft - mainPinHalfWidth;
+      var locationMaxX = MainPinMove.parentElement.offsetWidth - mainPinHalfWidth;
+      var locationMinY = window.data.LOCATION_Y_MIN - window.pin.HEIGHT;
+      var locationMaxY = window.data.LOCATION_Y_MAX - window.pin.HEIGHT;
+
+
+
+      // var MainPinMoveMinX = locationMinX - shift.x;
+      // var MainPinMoveMinY = window.data.LOCATION_Y_MIN - shift.y;
+      // var limitationMinPinX = locationMinX - MAIN_PIN_HALF_WIDTH;
+      // var limitationMaxPinX = locationMaxX - MAIN_PIN_HALF_WIDTH;
+
+      var limitMainPin = function (valueX, valueY, valueMinX, valueMaxX, valueMinY, valueMaxY) {
+
+        if (valueX < valueMinX) {
+          valueX = valueMinX;
+        }
+        if (valueX > valueMaxX) {
+          valueX = valueMaxX;
+        }
+        if (valueY < valueMinY) {
+          valueY = valueMinY;
+        }
+        if (valueY > valueMaxY) {
+          valueY = valueMaxY;
+        }
+
+        MainPinMove.style.top = valueY + 'px';
+        MainPinMove.style.left = valueX + 'px';
+
+        window.main.fieldAddress.value = (valueX + mainPinHalfWidth) + ', ' + (valueY + mainPinHalfHeight);
+      };
+
+      limitMainPin(locationX, locationY, locationMinX, locationMaxX, locationMinY, locationMaxY);
 
     };
+
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-
     };
+
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
 
   window.movementPin = {
-    movePin: movePin
+    move: MainPinMove
   };
 })();
 

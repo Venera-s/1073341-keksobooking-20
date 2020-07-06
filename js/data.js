@@ -53,9 +53,9 @@
 
   window.data = {
     getAnnouncements: getAnnouncements,
-    advertsAmount: ADVERTS_AMOUNT,
-    roomsAmountMax: ROOMS_AMOUNT_MAX,
-    locationMinY: LOCATION_Y_MIN,
-    locationMaxY: LOCATION_Y_MAX
+    ADVERTS_AMOUNT: ADVERTS_AMOUNT,
+    ROOMS_AMOUNT_MAX: ROOMS_AMOUNT_MAX,
+    LOCATION_Y_MIN: LOCATION_Y_MIN,
+    LOCATION_Y_MAX: LOCATION_Y_MAX
   };
 })();

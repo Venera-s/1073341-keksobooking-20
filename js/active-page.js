@@ -8,24 +8,24 @@
   var mainPin = document.querySelector('.map__pin--main');
 
   var activatePage = function () {
-    window.main.setAddress(window.map.pinHeight);
+    window.main.setAddress(window.map.MAP_PIN_HEIGHT);
     window.main.setEnabled(map, MAP_FADED);
     window.main.setEnabledAdForm();
     toggleStateForm(window.main.elements);
-    var allAnnouncements = window.data.getAnnouncements(window.data.advertsAmount);
+    var allAnnouncements = window.data.getAnnouncements(window.data.ADVERTS_AMOUNT);
     mapPins.appendChild(window.pin.create(allAnnouncements));
     mainPin.removeEventListener('mousedown', onMainPinClick);
     mainPin.removeEventListener('keydown', onMainPinKeyDown);
   };
 
   var onMainPinClick = function (evt) {
-    if (evt.button === window.util.mouseDownLeft) {
+    if (evt.button === window.util.MOUSE_DOWN_LEFT) {
       activatePage();
     }
   };
 
   var onMainPinKeyDown = function (evt) {
-    if (evt.key === window.util.keyCodeEnter) {
+    if (evt.key === window.util.KEY_CODE_ENTER) {
       activatePage();
     }
   };

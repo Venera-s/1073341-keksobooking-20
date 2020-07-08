@@ -1,9 +1,8 @@
 'use strict';
 
 (function () {
-
-  var MOUSE_DOWN_LEFT = 0;
-  var KEY_CODE_ENTER = 'Enter';
+  var MOUSE_LEFT = 0;
+  var KEY_ENTER = 'Enter';
 
   var getRandomInt = function (min, max) {
     min = Math.ceil(min);
@@ -23,8 +22,9 @@
   };
 
   window.util = {
-    MOUSE_DOWN_LEFT: MOUSE_DOWN_LEFT,
-    KEY_CODE_ENTER: KEY_CODE_ENTER,
+    MOUSE_LEFT: MOUSE_LEFT,
+    KEY_ENTER: KEY_ENTER,
+
     getRandomInt: getRandomInt,
     getRandomElement: getRandomElement,
     getRandomPart: getRandomPart

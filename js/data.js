@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var ADVERTS_AMOUNT = 8;
   var GUESTS_AMOUNT_MAX = 10;
   var ROOMS_AMOUNT_MAX = 100;
   var LOCATION_Y_MIN = 130;
@@ -52,10 +51,11 @@
 
 
   window.data = {
-    getAnnouncements: getAnnouncements,
-    ADVERTS_AMOUNT: ADVERTS_AMOUNT,
     ROOMS_AMOUNT_MAX: ROOMS_AMOUNT_MAX,
     LOCATION_Y_MIN: LOCATION_Y_MIN,
-    LOCATION_Y_MAX: LOCATION_Y_MAX
+    LOCATION_Y_MAX: LOCATION_Y_MAX,
+
+    getAnnouncements: getAnnouncements
+
   };
 })();

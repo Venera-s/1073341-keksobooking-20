@@ -2,7 +2,8 @@
 
 (function () {
   var ADVERTS_AMOUNT = 8;
-
+  var map = document.querySelector('.map');
+  var mapFilters = document.querySelector('.map__filters-container');
   var mainPin = document.querySelector('.map__pin--main');
 
   window.form.toggleElementState();
@@ -17,6 +18,8 @@
 
     var adverts = window.data.getAnnouncements(ADVERTS_AMOUNT);
     window.map.renderAdverts(adverts);
+    var card = window.card.create(adverts[0]);
+    map.insertBefore(card, mapFilters);
   };
 
   var deactivate = function () {

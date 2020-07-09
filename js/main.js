@@ -42,4 +42,8 @@
   deactivate();
 
   window.move.init(mainPin);
+
+  window.main = {
+    ADVERTS_AMOUNT: ADVERTS_AMOUNT,
+  };
 })();

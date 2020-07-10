@@ -3,6 +3,7 @@
 (function () {
   var MOUSE_LEFT = 0;
   var KEY_ENTER = 'Enter';
+  var CLASS_HIDDEN = 'hidden';
 
   var getRandomInt = function (min, max) {
     min = Math.ceil(min);
@@ -24,6 +25,7 @@
   window.util = {
     MOUSE_LEFT: MOUSE_LEFT,
     KEY_ENTER: KEY_ENTER,
+    CLASS_HIDDEN: CLASS_HIDDEN,
 
     getRandomInt: getRandomInt,
     getRandomElement: getRandomElement,

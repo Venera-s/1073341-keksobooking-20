@@ -50,6 +50,7 @@
     removeMainPinClickListener: removeMainPinClickListener,
 
     setMainPinKeyDownListener: setMainPinKeyDownListener,
-    removeMainPinKeyDownListener: removeMainPinKeyDownListener
+    removeMainPinKeyDownListener: removeMainPinKeyDownListener,
+
   };
 })();

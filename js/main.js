@@ -55,25 +55,31 @@
 
   var onMapPinClick = function (evt) {
     removeMapPinActive();
+    closePopup();
+
     if (evt.target.matches('img[data-index]')) {
       evt.target.parentElement.classList.add(CLASS_MAP_PIN_ACTIVE);
     } else {
       evt.target.classList.add(CLASS_MAP_PIN_ACTIVE);
     }
+
     var pinIndex = evt.target.dataset.index;
-    closePopup();
     var card = window.card.create(window.data.getAnnouncements(ADVERTS_AMOUNT)[pinIndex]);
     map.insertBefore(card, mapFilters);
+
     var buttonClose = card.querySelector('.popup__close');
     buttonClose.addEventListener('click', onButtonCloseClick);
+
     document.addEventListener('keydown', onPopupKeydownEsc);
   };
 
   var closePopup = function () {
     var popup = document.querySelector('.popup');
+
     if (popup) {
       popup.remove();
     }
+
     document.removeEventListener('keydown', onPopupKeydownEsc);
   };
 

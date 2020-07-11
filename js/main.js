@@ -1,13 +1,34 @@
 'use strict';
 
 (function () {
-  var ADVERTS_AMOUNT = 8;
   var CLASS_MAP_PIN_ACTIVE = 'map__pin--active';
   var map = document.querySelector('.map');
+  var mapForm = document.querySelector('.map__filters');
+  var mapFormElements = mapForm.querySelectorAll('input, select');
   var mapFilters = document.querySelector('.map__filters-container');
   var mainPin = document.querySelector('.map__pin--main');
+  var adFormElements = window.form.adForm.querySelectorAll('input, select, textarea, .ad-form__submit');
 
-  window.form.toggleElementState();
+  window.form.toggleElementState(mapFormElements);
+  window.form.toggleElementState(adFormElements);
+
+  var successHandler = function (adverts) {
+    window.backend.dataAdverts = adverts;
+    window.map.renderAdverts(adverts);
+    window.form.toggleElementState(mapFormElements);
+    setMapPinsClickListener(onMapPinClick);
+  };
+
+  var errorHandler = function (message) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; color: white; font-weight: bold; background-color: orange;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '35px';
+    node.textContent = message;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
 
   var activate = function () {
     window.map.removeMainPinClickListener(onMainPinClick);
@@ -17,12 +38,9 @@
 
     window.map.setEnabled(true);
     window.form.setEnabled(true);
-    window.form.toggleElementState();
+    window.form.toggleElementState(adFormElements);
 
-    var adverts = window.data.getAnnouncements(ADVERTS_AMOUNT);
-    window.map.renderAdverts(adverts);
-
-    setMapPinsClickListener(onMapPinClick);
+    window.backend.loadData(successHandler, errorHandler);
   };
 
   var deactivate = function () {
@@ -64,7 +82,7 @@
     }
 
     var pinIndex = evt.target.dataset.index;
-    var card = window.card.create(window.data.getAnnouncements(ADVERTS_AMOUNT)[pinIndex]);
+    var card = window.card.create(window.backend.dataAdverts[pinIndex]);
     map.insertBefore(card, mapFilters);
 
     var buttonClose = card.querySelector('.popup__close');

@@ -1,10 +1,14 @@
 'use strict';
 
 (function () {
-  var GET = 'GET';
-  var POST = 'POST';
-  var URL_GET = 'https://javascript.pages.academy/keksobooking/data';
-  var URL_POST = 'https://javascript.pages.academy/keksobooking';
+  var Method = {
+    GET: 'GET',
+    POST: 'POST'
+  };
+  var MethodUrl = {
+    URL_GET: 'https://javascript.pages.academy/keksobooking/data',
+    URL_POST: 'https://javascript.pages.academy/keksobooking'
+  };
   var StatusCode = {
     OK: 200,
     BAD_REQUEST: 400,
@@ -12,8 +16,6 @@
     NOT_FOUND: 404,
     SERVER_ERROR: 500
   };
-
-  var dataAdverts = [];
 
   var requestData = function (successHandler, errorHandler, method, url) {
     var xhr = new XMLHttpRequest();
@@ -55,16 +57,15 @@
   };
 
   var loadData = function (successHandler, errorHandler) {
-    requestData(successHandler, errorHandler, GET, URL_GET).send();
+    requestData(successHandler, errorHandler, Method.GET, MethodUrl.URL_GET).send();
   };
 
   var uploadData = function (data, successHandler, errorHandler) {
-    requestData(successHandler, errorHandler, POST, URL_POST).send(data);
+    requestData(successHandler, errorHandler, Method.POST, MethodUrl.URL_POST).send(data);
   };
 
   window.backend = {
     loadData: loadData,
     uploadData: uploadData,
-    dataAdverts: dataAdverts
   };
 })();

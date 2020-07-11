@@ -12,7 +12,6 @@
     'palace': 10000
   };
 
-  var formElements = document.querySelectorAll('form input, form select, form textarea, .ad-form__submit');
   var adForm = document.querySelector('.ad-form');
   var fieldAddress = adForm.querySelector('#address');
   var titleField = adForm.querySelector('#title');
@@ -31,8 +30,8 @@
     }
   };
 
-  var toggleFormState = function () {
-    formElements.forEach(function (element) {
+  var toggleFormState = function (elements) {
+    elements.forEach(function (element) {
       element.toggleAttribute('disabled');
     });
   };
@@ -108,6 +107,7 @@
     setEnabled: setEnabled,
     setAddress: setAddress,
     toggleElementState: toggleFormState,
-    fieldAddress: fieldAddress
+    fieldAddress: fieldAddress,
+    adForm: adForm,
   };
 })();

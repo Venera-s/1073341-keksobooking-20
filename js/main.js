@@ -7,14 +7,14 @@
   var resetButton = document.querySelector('.ad-form__reset');
   var dataAdverts = [];
 
-  var mapFiltersState = function () {
+  var setMapFiltersState = function () {
     mapFilters.classList.toggle(window.util.CLASS_HIDDEN);
   };
 
   var setInitialStates = function () {
     window.form.toggleAdFormState();
     window.map.toggleMapFormState();
-    mapFiltersState();
+    setMapFiltersState();
     window.form.setAddress(window.map.MAIN_PIN_ROUND_HALF_HEIGHT);
   };
 
@@ -38,7 +38,7 @@
     window.map.removeMainPinClickListener(onMainPinClick);
     window.map.removeMainPinKeyDownListener(onMainPinKeyDown);
 
-    mapFiltersState();
+    setMapFiltersState();
 
     window.form.setAddress(window.map.MAIN_PIN_WIDTH);
 

@@ -23,6 +23,12 @@
     return elements.slice(begin, end);
   };
 
+  // var toggleFormState = function (elements) {
+  //   elements.forEach(function (element) {
+  //     element.toggleAttribute('disabled');
+  //   });
+  // };
+
   window.util = {
     MOUSE_LEFT: MOUSE_LEFT,
     KEY_ENTER: KEY_ENTER,
@@ -31,6 +37,7 @@
 
     getRandomInt: getRandomInt,
     getRandomElement: getRandomElement,
-    getRandomPart: getRandomPart
+    getRandomPart: getRandomPart,
+    // toggleElementState: toggleFormState,
   };
 })();

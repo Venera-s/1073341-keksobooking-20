@@ -4,6 +4,8 @@
   var TITLE_LENGTH_MIN = 30;
   var TITLE_LENGTH_MAX = 100;
   var FORM_DISABLED = 'ad-form--disabled';
+  var LOCATION_MAIN_PIN_X = 570;
+  var LOCATION_MAIN_PIN_Y = 375;
 
   var PRICES_FOR_TYPES = {
     'bungalo': 0,
@@ -13,8 +15,10 @@
   };
 
   var adForm = document.querySelector('.ad-form');
+  var adFormElements = adForm.querySelectorAll('input, select, textarea, button');
   var fieldAddress = adForm.querySelector('#address');
   var titleField = adForm.querySelector('#title');
+  var mainPin = document.querySelector('.map__pin--main');
   var housePrice = adForm.querySelector('#price');
   var typeHouse = adForm.querySelector('#type');
   var roomNumber = adForm.querySelector('#room_number');
@@ -30,13 +34,13 @@
     }
   };
 
-  var toggleFormState = function (elements) {
-    elements.forEach(function (element) {
+  var toggleAdFormState = function () {
+    adFormElements.forEach(function (element) {
       element.toggleAttribute('disabled');
     });
   };
 
-  var setAddress = function (mainPin, mapPinHeight) {
+  var setAddress = function (mapPinHeight) {
     var coordinateX = Math.round(mainPin.offsetLeft + window.map.MAIN_PIN_WIDTH / 2);
     var coordinateY = mainPin.offsetTop + Math.round(mapPinHeight);
     fieldAddress.value = coordinateX + ', ' + coordinateY;
@@ -103,11 +107,20 @@
   timeIn.addEventListener('change', onTimeChange);
   timeOut.addEventListener('change', onTimeChange);
 
+  var setDefaultLocation = function () {
+    mainPin.style.top = LOCATION_MAIN_PIN_Y + 'px';
+    mainPin.style.left = LOCATION_MAIN_PIN_X + 'px';
+  };
+
   window.form = {
     setEnabled: setEnabled,
     setAddress: setAddress,
-    toggleElementState: toggleFormState,
+    toggleAdFormState: toggleAdFormState,
+    setDefaultLocation: setDefaultLocation,
+    onTypeChange: onTypeChange,
+
     fieldAddress: fieldAddress,
     adForm: adForm,
+    mainPin: mainPin,
   };
 })();

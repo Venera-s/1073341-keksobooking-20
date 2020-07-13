@@ -7,6 +7,8 @@
   var MAIN_PIN_WIDTH = 65;
 
   var map = document.querySelector('.map');
+  var mapForm = document.querySelector('.map__filters');
+  var mapFormElements = mapForm.querySelectorAll('input, select');
   var mapPins = document.querySelector('.map__pins');
   var mainPin = document.querySelector('.map__pin--main');
 
@@ -16,6 +18,12 @@
     } else {
       map.classList.add(MAP_FADED);
     }
+  };
+
+  var toggleMapFormState = function () {
+    mapFormElements.forEach(function (element) {
+      element.toggleAttribute('disabled');
+    });
   };
 
   var renderAdverts = function (adverts) {
@@ -42,6 +50,10 @@
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
     MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
     MAIN_PIN_ROUND_HALF_HEIGHT: MAIN_PIN_ROUND_HALF_HEIGHT,
+
+    mapForm: mapForm,
+
+    toggleMapFormState: toggleMapFormState,
 
     setEnabled: setEnabled,
     renderAdverts: renderAdverts,

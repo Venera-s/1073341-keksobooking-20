@@ -34,6 +34,7 @@
       resetMainPinLocation();
       closeAdvertCard();
       mapForm.reset();
+      setEnabledMapFilters(true);
     }
   };
 

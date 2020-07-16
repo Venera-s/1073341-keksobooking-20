@@ -33,9 +33,6 @@
 
     window.map.setEnabled(false);
     window.form.setEnabled(false);
-
-    window.map.setEnabledMapFilters(true);
-
   };
 
   var onMainPinClick = function (evt) {

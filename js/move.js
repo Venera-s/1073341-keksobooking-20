@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var init = function (element) {
+  var init = function (element, moveListener) {
     element.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
@@ -23,37 +23,41 @@
           y: moveEvt.clientY
         };
 
-        var locationX = element.offsetLeft - shift.x;
-        var locationY = element.offsetTop - shift.y;
-        var mainPinHalfWidth = Math.round(window.map.MAIN_PIN_WIDTH / 2);
-        var mainPinHalfHeight = window.map.MAIN_PIN_HEIGHT;
-        var locationMinX = element.parentElement.offsetLeft - mainPinHalfWidth;
-        var locationMaxX = element.parentElement.offsetWidth - mainPinHalfWidth;
-        var locationMinY = window.data.LOCATION_Y_MIN - window.map.MAIN_PIN_HEIGHT;
-        var locationMaxY = window.data.LOCATION_Y_MAX - window.map.MAIN_PIN_HEIGHT;
+        var x = element.offsetLeft - shift.x;
+        var y = element.offsetTop - shift.y;
+
+        var mainPinHalfWidth = Math.floor(window.map.MAIN_PIN_WIDTH / 2);
+
+        var minX = element.parentElement.offsetLeft - mainPinHalfWidth;
+        var maxX = element.parentElement.offsetWidth - mainPinHalfWidth;
+
+        var minY = window.map.LOCATION_Y_MIN - window.map.MAIN_PIN_HEIGHT_WITH_POINT;
+        var maxY = window.map.LOCATION_Y_MAX - window.map.MAIN_PIN_HEIGHT_WITH_POINT;
 
         var limitMainPin = function (valueX, valueY, valueMinX, valueMaxX, valueMinY, valueMaxY) {
+          var correctX = valueX;
+          var correctY = valueY;
 
           if (valueX < valueMinX) {
-            valueX = valueMinX;
+            correctX = valueMinX;
           }
           if (valueX > valueMaxX) {
-            valueX = valueMaxX;
+            correctX = valueMaxX;
           }
           if (valueY < valueMinY) {
-            valueY = valueMinY;
+            correctY = valueMinY;
           }
           if (valueY > valueMaxY) {
-            valueY = valueMaxY;
+            correctY = valueMaxY;
           }
 
-          element.style.top = valueY + 'px';
-          element.style.left = valueX + 'px';
-          // надо подумать
-          window.form.fieldAddress.value = (valueX + mainPinHalfWidth) + ', ' + (valueY + mainPinHalfHeight);
+          element.style.top = correctY + 'px';
+          element.style.left = correctX + 'px';
+
+          moveListener();
         };
 
-        limitMainPin(locationX, locationY, locationMinX, locationMaxX, locationMinY, locationMaxY);
+        limitMainPin(x, y, minX, maxX, minY, maxY);
       };
 
       var onMouseUp = function (upEvt) {

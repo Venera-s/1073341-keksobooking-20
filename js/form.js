@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ROOMS_AMOUNT_MAX = 100;
   var TITLE_LENGTH_MIN = 30;
   var TITLE_LENGTH_MAX = 100;
   var FORM_DISABLED = 'ad-form--disabled';
@@ -13,6 +14,7 @@
   };
 
   var adForm = document.querySelector('.ad-form');
+  var formElements = adForm.querySelectorAll('input, select, textarea, button');
   var fieldAddress = adForm.querySelector('#address');
   var titleField = adForm.querySelector('#title');
   var housePrice = adForm.querySelector('#price');
@@ -21,25 +23,29 @@
   var capacity = adForm.querySelector('#capacity');
   var timeIn = adForm.querySelector('#timein');
   var timeOut = adForm.querySelector('#timeout');
+  var resetButton = document.querySelector('.ad-form__reset');
 
   var setEnabled = function (enabled) {
     if (enabled) {
       adForm.classList.remove(FORM_DISABLED);
+      setAddress(window.map.getMainPinLocation());
     } else {
       adForm.classList.add(FORM_DISABLED);
+      adForm.reset();
+      onTypeChange();
+      window.form.setAddress(window.map.getMainPinLocation());
     }
+    toggleFormState();
   };
 
-  var toggleFormState = function (elements) {
-    elements.forEach(function (element) {
+  var toggleFormState = function () {
+    formElements.forEach(function (element) {
       element.toggleAttribute('disabled');
     });
   };
 
-  var setAddress = function (mainPin, mapPinHeight) {
-    var coordinateX = Math.round(mainPin.offsetLeft + window.map.MAIN_PIN_WIDTH / 2);
-    var coordinateY = mainPin.offsetTop + Math.round(mapPinHeight);
-    fieldAddress.value = coordinateX + ', ' + coordinateY;
+  var setAddress = function (location) {
+    fieldAddress.value = location.x + ', ' + location.y;
   };
 
   var onPriceInput = function () {
@@ -58,9 +64,9 @@
     var roomValue = roomNumber.selectedIndex;
     var capacityValue = capacity.selectedIndex;
     var validationResult = '';
-    if (rooms === window.data.ROOMS_AMOUNT_MAX && guests !== 0) {
+    if (rooms === ROOMS_AMOUNT_MAX && guests !== 0) {
       validationResult = 'Для ' + roomNumber.options[roomValue].label + ' предназначено ' + capacity.options[roomValue].label;
-    } else if (guests === 0 && rooms !== window.data.ROOMS_AMOUNT_MAX) {
+    } else if (guests === 0 && rooms !== ROOMS_AMOUNT_MAX) {
       validationResult = 'Для ' + capacity.options[capacityValue].label + ' предназначено ' + roomNumber.options[capacityValue].label;
     } else if (rooms < guests) {
       validationResult = 'Количество комнат не должно превышать количество гостей';
@@ -92,6 +98,20 @@
     titleField.setCustomValidity(validationResult);
   };
 
+  var setSubmitListener = function (listener) {
+    adForm.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      listener(new FormData(adForm));
+    });
+  };
+
+  var setResetListener = function (listener) {
+    resetButton.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      listener();
+    });
+  };
+
   titleField.addEventListener('input', onTitleInput);
 
   typeHouse.addEventListener('change', onTypeChange);
@@ -106,8 +126,8 @@
   window.form = {
     setEnabled: setEnabled,
     setAddress: setAddress,
-    toggleElementState: toggleFormState,
-    fieldAddress: fieldAddress,
-    adForm: adForm,
+
+    setSubmitListener: setSubmitListener,
+    setResetListener: setResetListener
   };
 })();

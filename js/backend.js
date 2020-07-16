@@ -1,10 +1,16 @@
 'use strict';
 
 (function () {
-  var GET = 'GET';
-  var POST = 'POST';
-  var URL_GET = 'https://javascript.pages.academy/keksobooking/data';
-  var URL_POST = 'https://javascript.pages.academy/keksobooking';
+  var Method = {
+    GET: 'GET',
+    POST: 'POST'
+  };
+
+  var Api = {
+    LOAD: 'https://javascript.pages.academy/keksobooking/data',
+    SAVE: 'https://javascript.pages.academy/keksobooking'
+  };
+
   var StatusCode = {
     OK: 200,
     BAD_REQUEST: 400,
@@ -13,9 +19,7 @@
     SERVER_ERROR: 500
   };
 
-  var dataAdverts = [];
-
-  var requestData = function (successHandler, errorHandler, method, url) {
+  var createRequest = function (successHandler, errorHandler, method, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -54,17 +58,18 @@
     return xhr;
   };
 
-  var loadData = function (successHandler, errorHandler) {
-    requestData(successHandler, errorHandler, GET, URL_GET).send();
+  var load = function (successHandler, errorHandler) {
+    var req = createRequest(successHandler, errorHandler, Method.GET, Api.LOAD);
+    req.send();
   };
 
-  var uploadData = function (data, successHandler, errorHandler) {
-    requestData(successHandler, errorHandler, POST, URL_POST).send(data);
+  var save = function (data, successHandler, errorHandler) {
+    var req = createRequest(successHandler, errorHandler, Method.POST, Api.SAVE);
+    req.send(data);
   };
 
   window.backend = {
-    loadData: loadData,
-    uploadData: uploadData,
-    dataAdverts: dataAdverts
+    load: load,
+    save: save,
   };
 })();

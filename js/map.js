@@ -34,6 +34,7 @@
       resetMainPinLocation();
       closeAdvertCard();
       mapForm.reset();
+      setEnabledMapFilters(true);
     }
   };
 
@@ -58,6 +59,7 @@
 
   var renderAdverts = function (adverts) {
     removePins();
+    closeAdvertCard();
 
     mapPins.appendChild(renderAdvertPins(adverts));
     setEnabledMapFilters(false);
@@ -90,13 +92,13 @@
     return fragment;
   };
 
-  // var setMapFormChangeListener = function (listener) {
-  //   mapForm.addEventListener('change', listener);
-  // };
+  var setMapFormChangeListener = function (listener) {
+    mapForm.addEventListener('change', listener);
+  };
 
-  // var removeMapFormChangeListener = function (listener) {
-  // mapForm.removeEventListener('change', renderAdverts);
-  // };
+  var removeMapFormChangeListener = function (listener) {
+    mapForm.removeEventListener('change', listener);
+  };
 
   var setMainPinClickListener = function (listener) {
     mainPin.addEventListener('click', listener);
@@ -184,8 +186,8 @@
     setEnabledMapFilters: setEnabledMapFilters,
     getMainPinLocation: getMainPinLocation,
 
-    // setMapFormChangeListener: setMapFormChangeListener,
-    // removeMapFormChangeListener: removeMapFormChangeListener,
+    setMapFormChangeListener: setMapFormChangeListener,
+    removeMapFormChangeListener: removeMapFormChangeListener,
 
     setMainPinClickListener: setMainPinClickListener,
     removeMainPinClickListener: removeMainPinClickListener,

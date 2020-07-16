@@ -3,26 +3,58 @@
 (function () {
   var main = document.querySelector('main');
 
-  var createMessageError = function (message) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; color: white; font-weight: bold; background-color: orange;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '35px';
-    node.textContent = message;
-    document.body.insertAdjacentElement('afterbegin', node);
+  var successMsgTemplate = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+
+  var errorMsgTemplate = document.querySelector('#error')
+    .content
+    .querySelector('.error');
+
+  var hideMessage = function () {
+    var successMsg = document.querySelector('.success');
+    if (successMsg) {
+      successMsg.remove();
+      return;
+    }
+
+    var errorMsg = document.querySelector('.error');
+    if (errorMsg) {
+      errorMsg.remove();
+    }
   };
 
-  var createMessage = function (tagName, className) {
-    var messageTemplate = document.querySelector(tagName).content;
-    var messageBlockTemplate = messageTemplate.querySelector(className);
-    var message = messageBlockTemplate.cloneNode(true);
+  var onDocumentKeyDown = function (evt) {
+    if (evt.key === window.util.Key.ESCAPE) {
+      hideMessage();
+      document.removeEventListener('keydown', onDocumentKeyDown);
+    }
+  };
+
+  var onDocumentClick = function () {
+    hideMessage();
+    document.removeEventListener('click', onDocumentClick);
+  };
+
+  var showSuccess = function () {
+    var message = successMsgTemplate.cloneNode(true);
     main.insertAdjacentElement('afterbegin', message);
+
+    document.addEventListener('click', onDocumentClick);
+    document.addEventListener('keydown', onDocumentKeyDown);
+  };
+
+  var showError = function (message) {
+    var node = errorMsgTemplate.cloneNode(true);
+    node.querySelector('.error__message').textContent = message;
+    document.body.insertAdjacentElement('afterbegin', node);
+
+    document.addEventListener('click', onDocumentClick);
+    document.addEventListener('keydown', onDocumentKeyDown);
   };
 
   window.message = {
-    createError: createMessageError,
-    createForSubmit: createMessage,
+    showSuccess: showSuccess,
+    showError: showError
   };
 })();

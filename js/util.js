@@ -1,10 +1,14 @@
 'use strict';
 
 (function () {
-  var MOUSE_LEFT = 0;
-  var KEY_ENTER = 'Enter';
-  var KEY_ESC = 'Escape';
   var CLASS_HIDDEN = 'hidden';
+
+  var MOUSE_LEFT = 0;
+
+  var Key = {
+    ESCAPE: 'Escape',
+    ENTER: 'Enter'
+  };
 
   var getRandomInt = function (min, max) {
     min = Math.ceil(min);
@@ -23,21 +27,14 @@
     return elements.slice(begin, end);
   };
 
-  // var toggleFormState = function (elements) {
-  //   elements.forEach(function (element) {
-  //     element.toggleAttribute('disabled');
-  //   });
-  // };
-
   window.util = {
     MOUSE_LEFT: MOUSE_LEFT,
-    KEY_ENTER: KEY_ENTER,
-    KEY_ESC: KEY_ESC,
     CLASS_HIDDEN: CLASS_HIDDEN,
+
+    Key: Key,
 
     getRandomInt: getRandomInt,
     getRandomElement: getRandomElement,
-    getRandomPart: getRandomPart,
-    // toggleElementState: toggleFormState,
+    getRandomPart: getRandomPart
   };
 })();

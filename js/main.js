@@ -5,7 +5,7 @@
 
   var adverts = [];
 
-  var renderAdverts = function () {
+  var renderAdverts = window.debounce(function () {
     if (adverts.length === 0) {
       window.backend.load(function (loadedAdverts) {
         adverts = loadedAdverts;
@@ -15,7 +15,7 @@
     } else {
       window.map.renderAdverts(adverts);
     }
-  };
+  });
 
   var activate = function () {
     window.map.removeMainPinClickListener(onMainPinClick);

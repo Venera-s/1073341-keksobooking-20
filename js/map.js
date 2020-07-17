@@ -59,6 +59,7 @@
 
   var renderAdverts = function (adverts) {
     removePins();
+    closeAdvertCard();
 
     mapPins.appendChild(renderAdvertPins(adverts));
     setEnabledMapFilters(false);
@@ -77,7 +78,9 @@
 
   var renderAdvertPins = function (adverts) {
     var fragment = document.createDocumentFragment();
-    adverts.forEach(function (advert) {
+    var filteredAdverts = window.filters.adverts(adverts);
+
+    filteredAdverts.forEach(function (advert) {
       var pin = window.pin.create(advert);
 
       pin.addEventListener('click', function () {
@@ -87,6 +90,14 @@
       fragment.appendChild(pin);
     });
     return fragment;
+  };
+
+  var setMapFormChangeListener = function (listener) {
+    mapForm.addEventListener('change', listener);
+  };
+
+  var removeMapFormChangeListener = function (listener) {
+    mapForm.removeEventListener('change', listener);
   };
 
   var setMainPinClickListener = function (listener) {
@@ -174,6 +185,9 @@
     renderAdverts: renderAdverts,
     setEnabledMapFilters: setEnabledMapFilters,
     getMainPinLocation: getMainPinLocation,
+
+    setMapFormChangeListener: setMapFormChangeListener,
+    removeMapFormChangeListener: removeMapFormChangeListener,
 
     setMainPinClickListener: setMainPinClickListener,
     removeMainPinClickListener: removeMainPinClickListener,

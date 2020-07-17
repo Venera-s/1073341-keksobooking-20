@@ -20,6 +20,7 @@
   var activate = function () {
     window.map.removeMainPinClickListener(onMainPinClick);
     window.map.removeMainPinKeyDownListener(onMainPinKeyDown);
+    window.map.setMapFormChangeListener(renderAdverts);
 
     window.map.setEnabled(true);
     window.form.setEnabled(true);
@@ -30,6 +31,7 @@
   var deactivate = function () {
     window.map.setMainPinClickListener(onMainPinClick);
     window.map.setMainPinKeyDownListener(onMainPinKeyDown);
+    window.map.removeMapFormChangeListener(renderAdverts);
 
     window.map.setEnabled(false);
     window.form.setEnabled(false);

@@ -93,11 +93,7 @@
   };
 
   var setMapFormChangeListener = function (listener) {
-    mapForm.addEventListener('change', listener);
-  };
-
-  var removeMapFormChangeListener = function (listener) {
-    mapForm.removeEventListener('change', listener);
+    mapForm.addEventListener('change', window.debounce(listener));
   };
 
   var setMainPinClickListener = function (listener) {
@@ -187,7 +183,6 @@
     getMainPinLocation: getMainPinLocation,
 
     setMapFormChangeListener: setMapFormChangeListener,
-    removeMapFormChangeListener: removeMapFormChangeListener,
 
     setMainPinClickListener: setMainPinClickListener,
     removeMainPinClickListener: removeMainPinClickListener,

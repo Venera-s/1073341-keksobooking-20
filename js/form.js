@@ -33,7 +33,8 @@
       adForm.classList.add(FORM_DISABLED);
       adForm.reset();
       onTypeChange();
-      window.form.setAddress(window.map.getMainPinLocation());
+      setAddress(window.map.getMainPinLocation());
+      window.files.resetPreviewOfPhotos();
     }
     toggleFormState();
   };

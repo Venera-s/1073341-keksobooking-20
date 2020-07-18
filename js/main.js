@@ -2,7 +2,6 @@
 
 (function () {
   var mainPin = document.querySelector('.map__pin--main');
-  // var fieldsCheck = document.querySelectorAll('input, select');
 
   var adverts = [];
 

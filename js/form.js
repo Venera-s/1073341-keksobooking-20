@@ -109,7 +109,6 @@
       evt.preventDefault();
       listener(new FormData(adForm));
     });
-
   };
 
   var setSubmitButtonListener = function (listener) {

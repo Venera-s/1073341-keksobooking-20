@@ -52,7 +52,7 @@
     var cardFeatures = card.querySelector('.popup__features');
     cardFeatures.textContent = '';
 
-    if (advert.offer.features.lenght !== 0) {
+    if (advert.offer.features.length !== 0) {
       advert.offer.features.forEach(function (element) {
         var popupFeature = document.createElement('li');
         popupFeature.classList.add('popup__feature', 'popup__feature--' + element);

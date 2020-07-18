@@ -23,7 +23,9 @@
   var capacity = adForm.querySelector('#capacity');
   var timeIn = adForm.querySelector('#timein');
   var timeOut = adForm.querySelector('#timeout');
-  var resetButton = document.querySelector('.ad-form__reset');
+  var submitButton = adForm.querySelector('.ad-form__submit');
+  var resetButton = adForm.querySelector('.ad-form__reset');
+  var fieldsCheck = adForm.querySelectorAll('input, select');
 
   var setEnabled = function (enabled) {
     if (enabled) {
@@ -35,6 +37,9 @@
       onTypeChange();
       setAddress(window.map.getMainPinLocation());
       window.files.resetPreviewOfPhotos();
+      fieldsCheck.forEach(function (element) {
+        element.classList.remove('error-field');
+      });
     }
     toggleFormState();
   };
@@ -104,12 +109,20 @@
       evt.preventDefault();
       listener(new FormData(adForm));
     });
+
+  };
+
+  var setSubmitButtonListener = function (listener) {
+    submitButton.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      listener(fieldsCheck);
+    });
   };
 
   var setResetListener = function (listener) {
     resetButton.addEventListener('click', function (evt) {
       evt.preventDefault();
-      listener();
+      listener(fieldsCheck);
     });
   };
 
@@ -129,6 +142,7 @@
     setAddress: setAddress,
 
     setSubmitListener: setSubmitListener,
-    setResetListener: setResetListener
+    setResetListener: setResetListener,
+    setSubmitButtonListener: setSubmitButtonListener,
   };
 })();

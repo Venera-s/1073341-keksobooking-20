@@ -112,8 +112,7 @@
   };
 
   var setSubmitButtonListener = function (listener) {
-    submitButton.addEventListener('click', function (evt) {
-      evt.preventDefault();
+    submitButton.addEventListener('click', function () {
       listener(fieldsCheck);
     });
   };

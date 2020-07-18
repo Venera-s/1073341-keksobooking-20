@@ -48,7 +48,6 @@
     });
   };
 
-
   var filteringFunction = [filterByTypeHouse, filterByHousePrice, filterByRoomNumber, filterByCapacity, filterByFeatures];
 
   var filtrate = function (element) {
@@ -70,6 +69,6 @@
   };
 
   window.filters = {
-    adverts: filterAdverts,
+    getAdverts: filterAdverts,
   };
 })();

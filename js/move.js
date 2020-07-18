@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var init = function (element, moveListener) {
+  var initialize = function (element, moveListener) {
     element.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
@@ -73,7 +73,7 @@
   };
 
   window.move = {
-    init: init
+    initialize: initialize
   };
 })();
 

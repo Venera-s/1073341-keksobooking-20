@@ -52,7 +52,7 @@
 
   deactivate();
 
-  window.move.init(mainPin, function () {
+  window.move.initialize(mainPin, function () {
     window.form.setAddress(window.map.getMainPinLocation());
   });
 

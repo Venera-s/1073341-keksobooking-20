@@ -27,6 +27,8 @@
   var resetButton = adForm.querySelector('.ad-form__reset');
 
   var setEnabled = function (enabled) {
+    var errorField = adForm.querySelectorAll('.error-field');
+
     if (enabled) {
       adForm.classList.remove(FORM_DISABLED);
       setAddress(window.map.getMainPinLocation());
@@ -36,13 +38,11 @@
       onTypeChange();
       setAddress(window.map.getMainPinLocation());
       window.files.resetPreviewOfPhotos();
-      // var invalidFields = getInvalidFields();
-      // if (invalidFields) {
-      //   invalidFields.forEach(function (field) {
-      //     field.classList.remove('error-field');
-      //   });
-      // }
-
+      if (errorField) {
+        errorField.forEach(function (field) {
+          field.classList.remove('error-field');
+        });
+      }
     }
     toggleFormState();
   };
@@ -111,16 +111,28 @@
     return adForm.querySelectorAll(':invalid');
   };
 
+  var getValidFields = function () {
+    return adForm.querySelectorAll('.error-field:valid');
+  };
+
   var setSubmitListener = function (listener) {
     submitButton.addEventListener('click', function (evt) {
       evt.preventDefault();
 
       var invalidFields = getInvalidFields();
-      console.log(invalidFields);
+
       if (invalidFields.length !== 0) {
-        invalidFields.forEach(function (field) {
-          field.style.border = '1px solid red';
+        invalidFields.forEach(function (element) {
+          element.classList.add('error-field');
         });
+
+        var validFields = getValidFields();
+
+        if (validFields.length !== 0) {
+          validFields.forEach(function (field) {
+            field.classList.remove('error-field');
+          });
+        }
         return;
       }
 

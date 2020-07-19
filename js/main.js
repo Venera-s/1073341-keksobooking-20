@@ -63,15 +63,5 @@
     }, window.message.showError);
   });
 
-  window.form.setSubmitButtonListener(function (fieldsCheck) {
-    fieldsCheck.forEach(function (element) {
-      if (!element.checkValidity()) {
-        element.classList.add('error-field');
-      } else {
-        element.classList.remove('error-field');
-      }
-    });
-  });
-
   window.form.setResetListener(deactivate);
 })();

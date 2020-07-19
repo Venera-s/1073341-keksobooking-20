@@ -25,7 +25,6 @@
   var timeOut = adForm.querySelector('#timeout');
   var submitButton = adForm.querySelector('.ad-form__submit');
   var resetButton = adForm.querySelector('.ad-form__reset');
-  var fieldsCheck = adForm.querySelectorAll('input, select');
 
   var setEnabled = function (enabled) {
     if (enabled) {
@@ -37,9 +36,13 @@
       onTypeChange();
       setAddress(window.map.getMainPinLocation());
       window.files.resetPreviewOfPhotos();
-      fieldsCheck.forEach(function (element) {
-        element.classList.remove('error-field');
-      });
+      // var invalidFields = getInvalidFields();
+      // if (invalidFields) {
+      //   invalidFields.forEach(function (field) {
+      //     field.classList.remove('error-field');
+      //   });
+      // }
+
     }
     toggleFormState();
   };
@@ -104,23 +107,31 @@
     titleField.setCustomValidity(validationResult);
   };
 
-  var setSubmitListener = function (listener) {
-    adForm.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-      listener(new FormData(adForm));
-    });
+  var getInvalidFields = function () {
+    return adForm.querySelectorAll(':invalid');
   };
 
-  var setSubmitButtonListener = function (listener) {
-    submitButton.addEventListener('click', function () {
-      listener(fieldsCheck);
+  var setSubmitListener = function (listener) {
+    submitButton.addEventListener('click', function (evt) {
+      evt.preventDefault();
+
+      var invalidFields = getInvalidFields();
+      console.log(invalidFields);
+      if (invalidFields.length !== 0) {
+        invalidFields.forEach(function (field) {
+          field.style.border = '1px solid red';
+        });
+        return;
+      }
+
+      listener(new FormData(adForm));
     });
   };
 
   var setResetListener = function (listener) {
     resetButton.addEventListener('click', function (evt) {
       evt.preventDefault();
-      listener(fieldsCheck);
+      listener();
     });
   };
 
@@ -141,6 +152,5 @@
 
     setSubmitListener: setSubmitListener,
     setResetListener: setResetListener,
-    setSubmitButtonListener: setSubmitButtonListener,
   };
 })();

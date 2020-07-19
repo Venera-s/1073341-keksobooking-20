@@ -122,8 +122,8 @@
       var invalidFields = getInvalidFields();
 
       if (invalidFields.length !== 0) {
-        invalidFields.forEach(function (element) {
-          element.classList.add('error-field');
+        invalidFields.forEach(function (field) {
+          field.classList.add('error-field');
         });
 
         var validFields = getValidFields();

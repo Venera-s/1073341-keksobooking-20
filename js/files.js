@@ -38,21 +38,21 @@
     return blockImg;
   };
 
-  var chooserAvatarChangeHandler = function () {
+  var onChooserAvatarChange = function () {
     loadFile(chooserAvatar, previewAvatar);
   };
 
-  var chooserPhotoOfHouseChangeHandler = function () {
+  var onChooserPhotoOfHouseChange = function () {
     previewPhotoOfHouse.classList.add('hidden');
     loadFile(chooserPhotoOfHouse, createPreviewPhotoElement());
   };
 
   var setChooserAvatarChangeListener = function () {
-    chooserAvatar.addEventListener('change', chooserAvatarChangeHandler);
+    chooserAvatar.addEventListener('change', onChooserAvatarChange);
   };
 
   var setChooserHouseChangeListener = function () {
-    chooserPhotoOfHouse.addEventListener('change', chooserPhotoOfHouseChangeHandler);
+    chooserPhotoOfHouse.addEventListener('change', onChooserPhotoOfHouseChange);
   };
 
   var resetPreviewOfPhotos = function () {

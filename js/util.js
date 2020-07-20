@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var CLASS_HIDDEN = 'hidden';
-
   var MOUSE_LEFT = 0;
 
   var Key = {
@@ -29,7 +27,6 @@
 
   window.util = {
     MOUSE_LEFT: MOUSE_LEFT,
-    CLASS_HIDDEN: CLASS_HIDDEN,
 
     Key: Key,
 

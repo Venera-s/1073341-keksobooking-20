@@ -59,7 +59,7 @@
     var photosOfHouse = document.querySelectorAll('.ad-form__photo:not(.ad-form__photo--template)');
 
     previewAvatar.src = DEFAULT_AVATAR;
-    previewPhotoOfHouse.classList.remove(window.util.CLASS_HIDDEN);
+    previewPhotoOfHouse.classList.remove('hidden');
     if (photosOfHouse) {
       photosOfHouse.forEach(function (element) {
         element.remove();

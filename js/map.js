@@ -26,10 +26,10 @@
   var setEnabled = function (enabled) {
     if (enabled) {
       map.classList.remove(MAP_FADED);
-      mapFilters.classList.remove(window.util.CLASS_HIDDEN);
+      mapFilters.classList.remove('hidden');
     } else {
       map.classList.add(MAP_FADED);
-      mapFilters.classList.add(window.util.CLASS_HIDDEN);
+      mapFilters.classList.add('hidden');
       removePins();
       resetMainPinLocation();
       closeAdvertCard();

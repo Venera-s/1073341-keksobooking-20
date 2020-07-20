@@ -33,13 +33,13 @@
     if (advert.author.avatar) {
       popupAvatar.src = advert.author.avatar;
     } else {
-      popupAvatar.classList.add(window.util.CLASS_HIDDEN);
+      popupAvatar.classList.add('hidden');
     }
 
     if (advert.offer.description) {
       popupDescription.textContent = advert.offer.description;
     } else {
-      popupDescription.classList.add(window.util.CLASS_HIDDEN);
+      popupDescription.classList.add('hidden');
     }
 
     renderFeatures(advert, card);
@@ -59,7 +59,7 @@
         cardFeatures.appendChild(popupFeature);
       });
     } else {
-      cardFeatures.classList.add(window.util.CLASS_HIDDEN);
+      cardFeatures.classList.add('hidden');
     }
   };
 
@@ -75,7 +75,7 @@
         cardPhotos.appendChild(cardPhoto);
       });
     } else {
-      cardPhotos.classList.add(window.util.CLASS_HIDDEN);
+      cardPhotos.classList.add('hidden');
     }
   };
 

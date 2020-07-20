@@ -59,6 +59,9 @@
 
   var onPriceInput = function () {
     housePrice.reportValidity();
+    if (housePrice.checkValidity()) {
+      housePrice.classList.remove('error-field');
+    }
   };
 
   var onTypeChange = function () {
@@ -73,12 +76,15 @@
     var roomValue = roomNumber.selectedIndex;
     var capacityValue = capacity.selectedIndex;
     var validationResult = '';
+
     if (rooms === ROOMS_AMOUNT_MAX && guests !== 0) {
       validationResult = 'Для ' + roomNumber.options[roomValue].label + ' предназначено ' + capacity.options[roomValue].label;
     } else if (guests === 0 && rooms !== ROOMS_AMOUNT_MAX) {
       validationResult = 'Для ' + capacity.options[capacityValue].label + ' предназначено ' + roomNumber.options[capacityValue].label;
     } else if (rooms < guests) {
       validationResult = 'Количество комнат не должно превышать количество гостей';
+    } else {
+      roomNumber.classList.remove('error-field');
     }
 
     roomNumber.setCustomValidity(validationResult);
@@ -101,6 +107,8 @@
       validationResult = 'Еще нужно ввести ' + (TITLE_LENGTH_MIN - titleFieldLength) + ' символов';
     } else if (titleFieldLength > TITLE_LENGTH_MAX) {
       validationResult = 'Удалите лишние ' + (TITLE_LENGTH_MAX - titleFieldLength) + ' символов';
+    } else {
+      titleField.classList.remove('error-field');
     }
 
     titleField.reportValidity();
@@ -109,10 +117,6 @@
 
   var getInvalidFields = function () {
     return adForm.querySelectorAll(':invalid');
-  };
-
-  var getValidFields = function () {
-    return adForm.querySelectorAll('.error-field:valid');
   };
 
   var setSubmitListener = function (listener) {
@@ -126,13 +130,6 @@
           field.classList.add('error-field');
         });
 
-        var validFields = getValidFields();
-
-        if (validFields.length !== 0) {
-          validFields.forEach(function (field) {
-            field.classList.remove('error-field');
-          });
-        }
         return;
       }
 

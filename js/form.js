@@ -23,9 +23,12 @@
   var capacity = adForm.querySelector('#capacity');
   var timeIn = adForm.querySelector('#timein');
   var timeOut = adForm.querySelector('#timeout');
-  var resetButton = document.querySelector('.ad-form__reset');
+  var submitButton = adForm.querySelector('.ad-form__submit');
+  var resetButton = adForm.querySelector('.ad-form__reset');
 
   var setEnabled = function (enabled) {
+    var errorField = adForm.querySelectorAll('.error-field');
+
     if (enabled) {
       adForm.classList.remove(FORM_DISABLED);
       setAddress(window.map.getMainPinLocation());
@@ -33,7 +36,13 @@
       adForm.classList.add(FORM_DISABLED);
       adForm.reset();
       onTypeChange();
-      window.form.setAddress(window.map.getMainPinLocation());
+      setAddress(window.map.getMainPinLocation());
+      window.files.resetPreviewOfPhotos();
+      if (errorField) {
+        errorField.forEach(function (field) {
+          field.classList.remove('error-field');
+        });
+      }
     }
     toggleFormState();
   };
@@ -98,9 +107,35 @@
     titleField.setCustomValidity(validationResult);
   };
 
+  var getInvalidFields = function () {
+    return adForm.querySelectorAll(':invalid');
+  };
+
+  var getValidFields = function () {
+    return adForm.querySelectorAll('.error-field:valid');
+  };
+
   var setSubmitListener = function (listener) {
-    adForm.addEventListener('submit', function (evt) {
+    submitButton.addEventListener('click', function (evt) {
       evt.preventDefault();
+
+      var invalidFields = getInvalidFields();
+
+      if (invalidFields.length !== 0) {
+        invalidFields.forEach(function (field) {
+          field.classList.add('error-field');
+        });
+
+        var validFields = getValidFields();
+
+        if (validFields.length !== 0) {
+          validFields.forEach(function (field) {
+            field.classList.remove('error-field');
+          });
+        }
+        return;
+      }
+
       listener(new FormData(adForm));
     });
   };
@@ -128,6 +163,6 @@
     setAddress: setAddress,
 
     setSubmitListener: setSubmitListener,
-    setResetListener: setResetListener
+    setResetListener: setResetListener,
   };
 })();

@@ -6,7 +6,7 @@
   var MAIN_PIN_HEIGHT = 65;
   var MAIN_PIN_WIDTH = 65;
 
-  var MAIN_PIN_HEIGHT_WITH_POINT = 81;
+  var MAIN_PIN_HEIGHT_WITH_POINT = 82;
 
   var LOCATION_Y_MIN = 130;
   var LOCATION_Y_MAX = 630;
@@ -78,7 +78,7 @@
 
   var renderAdvertPins = function (adverts) {
     var fragment = document.createDocumentFragment();
-    var filteredAdverts = window.filters.adverts(adverts);
+    var filteredAdverts = window.filters.getAdverts(adverts);
 
     filteredAdverts.forEach(function (advert) {
       var pin = window.pin.create(advert);
@@ -93,11 +93,7 @@
   };
 
   var setMapFormChangeListener = function (listener) {
-    mapForm.addEventListener('change', listener);
-  };
-
-  var removeMapFormChangeListener = function (listener) {
-    mapForm.removeEventListener('change', listener);
+    mapForm.addEventListener('change', window.debounce(listener));
   };
 
   var setMainPinClickListener = function (listener) {
@@ -187,7 +183,6 @@
     getMainPinLocation: getMainPinLocation,
 
     setMapFormChangeListener: setMapFormChangeListener,
-    removeMapFormChangeListener: removeMapFormChangeListener,
 
     setMainPinClickListener: setMainPinClickListener,
     removeMainPinClickListener: removeMainPinClickListener,
